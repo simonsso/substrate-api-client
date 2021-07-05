@@ -52,6 +52,9 @@ fn main() {
         .unwrap();
 
     println!("Transactor: {:?}", args.data);
+    if let Ok(s) = String::from_utf8(args.data){
+        println!("{}",s);
+    }
     println!("Destination: {:?}", args.from);
 }
 

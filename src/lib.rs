@@ -158,6 +158,7 @@ pub type AccountInfo = AccountInfoGen<Index, AccountData>;
 #[cfg(feature = "std")]
 type ApiResult<T> = Result<T, ApiClientError>;
 
+/// Handle for subtrateapi_client
 #[cfg(feature = "std")]
 #[derive(Clone)]
 pub struct Api<P>
@@ -178,6 +179,12 @@ where
     P: Pair,
     MultiSignature: From<P::Signature>,
 {
+    /// Create API handler
+    /// ```
+    ///     let url = get_node_url_from_cli();
+    /// ```
+
+    let api = Api::<sr25519::Pair>::new(url).unwrap();
     pub fn new(url: String) -> ApiResult<Self> {
         let genesis_hash = Self::_get_genesis_hash(url.clone())?;
         info!("Got genesis hash: {:?}", genesis_hash);
@@ -197,11 +204,13 @@ where
         })
     }
 
+    /// Set active signer
     pub fn set_signer(mut self, signer: P) -> Self {
         self.signer = Some(signer);
         self
     }
 
+    /// Get signer account None if self.signer is not set
     pub fn signer_account(&self) -> Option<AccountId32> {
         let pair = self.signer.as_ref()?;
         let mut arr: [u8; 32] = Default::default();
@@ -253,6 +262,7 @@ where
         }
     }
 
+    /// Fetch metadata for chain from rpc call
     pub fn get_metadata(&self) -> ApiResult<RuntimeMetadataPrefixed> {
         Self::_get_metadata(self.url.clone())
     }
@@ -261,6 +271,7 @@ where
         Self::_get_runtime_version(self.url.clone()).map(|v| v.spec_version)
     }
 
+    /// Fetch checksum for genesis block
     pub fn get_genesis_hash(&self) -> ApiResult<Hash> {
         Self::_get_genesis_hash(self.url.clone())
     }
@@ -283,11 +294,13 @@ where
         self.get_storage_by_key_hash(storagekey, None)
     }
 
+    /// get_account_data
     pub fn get_account_data(&self, address: &AccountId) -> ApiResult<Option<AccountData>> {
         self.get_account_info(address)
             .map(|info| info.map(|i| i.data))
     }
 
+    /// get_finalized_head
     pub fn get_finalized_head(&self) -> ApiResult<Option<Hash>> {
         let h = self.get_request(json_req::chain_get_finalized_head().to_string())?;
         match h {
