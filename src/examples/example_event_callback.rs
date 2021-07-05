@@ -51,7 +51,7 @@ fn main() {
                 for evr in &evts {
                     println!("decoded: {:?} {:?}", evr.phase, evr.event);
                     match &evr.event {
-                        Event::pallet_balances(be) => {
+                        Event::Balances(be) => {
                             println!(">>>>>>>>>> balances event: {:?}", be);
                             match &be {
                                 balances::Event::Transfer(transactor, dest, value) => {
@@ -65,11 +65,14 @@ fn main() {
                                 }
                             }
                         }
+                        Event::MSGModule(_me) => {
+                            println!("Msg event");
+                        }
                         _ => debug!("ignoring unsupported module event: {:?}", evr.event),
                     }
                 }
             }
-            Err(_) => error!("couldn't decode event record list"),
+            Err(e) => error!("couldn't decode event record list {:?}", e),
         }
     }
 }

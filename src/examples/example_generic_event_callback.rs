@@ -31,6 +31,12 @@ struct TransferEventArgs {
     value: u128,
 }
 
+#[derive(Decode)]
+struct MSGEventArgs {
+    data: Vec<u8>,
+    from: AccountId,
+}
+
 fn main() {
     env_logger::init();
     let url = get_node_url_from_cli();
@@ -41,13 +47,12 @@ fn main() {
     let (events_in, events_out) = channel();
 
     api.subscribe_events(events_in).unwrap();
-    let args: TransferEventArgs = api
-        .wait_for_event("Balances", "Transfer", None, &events_out)
+    let args: MSGEventArgs = api
+        .wait_for_event("MSGModule", "SomethingStored", None, &events_out)
         .unwrap();
 
-    println!("Transactor: {:?}", args.from);
-    println!("Destination: {:?}", args.to);
-    println!("Value: {:?}", args.value);
+    println!("Transactor: {:?}", args.data);
+    println!("Destination: {:?}", args.from);
 }
 
 pub fn get_node_url_from_cli() -> String {
