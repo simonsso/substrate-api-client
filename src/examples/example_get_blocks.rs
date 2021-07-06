@@ -42,16 +42,32 @@ fn main() {
 
     let b: SignedBlock = api.get_signed_block(Some(head)).unwrap().unwrap();
     println!("Finalized signed block:\n {:?} \n", b);
+    println!("Parrot: {:?}",b.block.header.parent_hash);
+
+    let mut parent= head;
+    // b.block.header.parent_hash;
+
+    while let Ok(Some(b))=api.get_signed_block(Some(parent)) {
+        let b: SignedBlock = b;
+        println!("Parrot LOOP: {},{:?}",b.block.header.number, b.block.header.parent_hash);
+        parent= b.block.header.parent_hash;
+    }
+
+
 
     println!(
         "Latest Header: \n {:?} \n",
         api.get_header::<Header>(None).unwrap()
     );
 
+    let block =api.get_block::<Block>(None).unwrap();
     println!(
         "Latest block: \n {:?} \n",
-        api.get_block::<Block>(None).unwrap()
+        block
     );
+
+
+
 
     println!("Subscribing to finalized heads");
     let (sender, receiver) = channel();

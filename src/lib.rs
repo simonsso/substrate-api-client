@@ -106,7 +106,7 @@ use sp_runtime::{
 pub type Balance = u128;
 
 /// Redefinition from `pallet-balances`. Currently, pallets break `no_std` builds, see:
-/// https://github.com/paritytech/substrate/issues/8891
+/// <https://github.com/paritytech/substrate/issues/8891>
 #[derive(Clone, Eq, PartialEq, Default, Debug, Encode, Decode)]
 pub struct AccountDataGen<Balance> {
     /// Non-reserved part of the balance. There may still be restrictions on this, but it is the
@@ -133,7 +133,7 @@ pub struct AccountDataGen<Balance> {
 /// Type used to encode the number of references an account has.
 pub type RefCount = u32;
 
-/// Redefinition from `frame-system`. Again see: https://github.com/paritytech/substrate/issues/8891
+/// Redefinition from `frame-system`. Again see: <https://github.com/paritytech/substrate/issues/8891>
 #[derive(Clone, Eq, PartialEq, Default, Debug, Encode, Decode)]
 pub struct AccountInfoGen<Index, AccountData> {
     /// The number of transactions this account has sent.
@@ -180,12 +180,20 @@ where
     MultiSignature: From<P::Signature>,
 {
     /// Create API handler
-    /// ```
-    ///     let url = get_node_url_from_cli();
-    /// ```
+    /// ```rust,no_run
+    ///  # use substrate_api_client::ApiClientError;
+    ///  # fn x() -> Result<(),ApiClientError> {
+    ///     use sp_core::sr25519;
+    ///  #  use substrate_api_client::Api;
+    ///     let url = "ws://host.example.net:9944";
+    ///     let api = Api::<sr25519::Pair>::new(url)?;
+    ///  # Ok(())
+    ///  # }
+    ///  
 
-    let api = Api::<sr25519::Pair>::new(url).unwrap();
-    pub fn new(url: String) -> ApiResult<Self> {
+    /// ```
+    pub fn new<S:Into<String>>(url: S) -> ApiResult<Self> {
+        let url = url.into();
         let genesis_hash = Self::_get_genesis_hash(url.clone())?;
         info!("Got genesis hash: {:?}", genesis_hash);
 
@@ -193,8 +201,6 @@ where
         debug!("Metadata: {:?}", metadata);
 
         let runtime_version = Self::_get_runtime_version(url.clone())?;
-        info!("Runtime Version: {:?}", runtime_version);
-
         Ok(Self {
             url,
             signer: None,
@@ -262,7 +268,21 @@ where
         }
     }
 
-    /// Fetch metadata for chain from rpc call
+    /// Fetch metadata for chain from rpc
+    /// ```rust,no_run
+    ///  # //use substrate_api_client::get_metadata;
+    ///  # use substrate_api_client::ApiClientError;
+    ///  # fn x1() -> Result<(),ApiClientError> {
+    ///  #  use sp_core::sr25519;
+    ///  #  use substrate_api_client::Api;
+    ///  #  let url = "ws://host.example.net:9944";
+    ///     let api = Api::<sr25519::Pair>::new(url)?;
+    ///  
+    ///     let metadata = api.get_metadata()?;
+    ///  # Ok(())
+    ///  # }
+    ///  ```
+
     pub fn get_metadata(&self) -> ApiResult<RuntimeMetadataPrefixed> {
         Self::_get_metadata(self.url.clone())
     }
