@@ -16,7 +16,7 @@ primitive-types = { version = "0.6.1", optional = true, features = ["codec"] }
 
 [dependencies.sp-core]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "sp-core"
 default-features = false
 features = ["full_crypto"]
@@ -29,49 +29,49 @@ default-features = false
 
 [dependencies.metadata]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "frame-metadata"
 default-features=false
 
 [dependencies.sp-version]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "sp-version"
 optional = true
 
 [dependencies.balances]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "pallet-balances"
 optional = true
 
 [dependencies.system]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "frame-system"
 optional = true
 
 [dependencies.sp-runtime]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "sp-runtime"
 default-features=false
 
 [dependencies.support]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "frame-support"
 default-features=false
 
 [dependencies.sp-std]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "sp-std"
 default-features = false
 
 [dependencies.sc-rpc-api]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 optional = true
 
 [dev-dependencies.node-template-runtime]
@@ -81,7 +81,7 @@ branch = "master"
 
 [dev-dependencies.keyring]
 git = "https://github.com/paritytech/substrate.git"
-rev = "d6c33e7ec313f9bd5e319dc0a5a3ace5543f9617"
+rev = "e5437efefa82bd8eb567f1245f0a7443ac4e4fe7"
 package = "sp-keyring"
 
 [dev-dependencies.clap]
